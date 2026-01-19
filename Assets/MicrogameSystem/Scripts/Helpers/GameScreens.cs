@@ -27,10 +27,9 @@ namespace Pansori.Microgames
         
         [Header("준비 화면")]
         [SerializeField] private GameObject readyPanel;
-        [SerializeField] private TMP_Text readyText;
+        [SerializeField] private Image readyImage;
+        [SerializeField] private Image startImage;
         [SerializeField] private TMP_Text controlDescriptionText; // 조작법 설명 텍스트
-        [SerializeField] private string readyMessage = "준비!";
-        [SerializeField] private string startMessage = "시작!";
         
         [Header("승리 화면")]
         [SerializeField] private GameObject victoryPanel;
@@ -303,24 +302,23 @@ namespace Pansori.Microgames
             float halfDuration = totalDuration * 0.5f;
             
             // "준비!" 표시
-            if (readyText != null)
+            if (readyImage != null)
             {
-                readyText.text = readyMessage;
-                readyText.gameObject.SetActive(true);
-                
+                readyImage.gameObject.SetActive(true);
+                startImage.gameObject.SetActive(false);
                 // 스케일 애니메이션
-                yield return StartCoroutine(ScalePunchEffect(readyText.rectTransform, textScaleAmount, textScaleAnimDuration));
+                yield return StartCoroutine(ScalePunchEffect(readyImage.rectTransform, textScaleAmount, textScaleAnimDuration));
             }
             
             yield return new WaitForSeconds(halfDuration - textScaleAnimDuration);
             
             // "시작!" 표시
-            if (readyText != null)
+            if (startImage != null)
             {
-                readyText.text = startMessage;
-                
+                startImage.gameObject.SetActive(true);
+                readyImage.gameObject.SetActive(false);
                 // 스케일 애니메이션
-                yield return StartCoroutine(ScalePunchEffect(readyText.rectTransform, textScaleAmount, textScaleAnimDuration));
+                yield return StartCoroutine(ScalePunchEffect(startImage.rectTransform, textScaleAmount, textScaleAnimDuration));
             }
             
             yield return new WaitForSeconds(halfDuration - textScaleAnimDuration);
@@ -609,7 +607,8 @@ namespace Pansori.Microgames
             backRect.sizeDelta = new Vector2(200, 60);
             
             Image backBtnImage = backBtnObj.AddComponent<Image>();
-            backBtnImage.color = new Color(0.3f, 0.3f, 0.35f, 1f);
+            //backBtnImage.color = new Color(0.3f, 0.3f, 0.35f, 1f);
+            backBtnImage.sprite = Resources.Load<Sprite>("UI_Image/ButtonBG_Grey");
             
             practiceBackButton = backBtnObj.AddComponent<Button>();
             practiceBackButton.onClick.AddListener(OnPracticeBackButtonClicked);
@@ -629,6 +628,8 @@ namespace Pansori.Microgames
             backText.fontSize = 28;
             backText.alignment = TextAlignmentOptions.Center;
             backText.color = Color.white;
+            
+         
             
             Debug.Log("[GameScreens] 연습 모드 선택 패널 동적 생성 완료");
         }
@@ -684,6 +685,8 @@ namespace Pansori.Microgames
             colors.pressedColor = new Color(0.2f, 0.2f, 0.25f, 1f);
             colors.selectedColor = new Color(0.35f, 0.35f, 0.45f, 1f);
             btn.colors = colors;
+   
+            
             
             // 썸네일 이미지
             GameObject thumbnailObj = new GameObject("Thumbnail");
