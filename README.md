@@ -14,5 +14,5 @@
 
 - 프로젝트 기간 : 2026.01.17 ~ 2026.01.19
 - 인원 : 5인(기획 1인, 개발 3인, 아트 1인)
-- 사용 툴 : Unity, Google Drive, Discord
+- 사용 툴 : Unity(6.3.2f1), Google Drive, Discord
 <br/> <br/> 
